@@ -1,9 +1,9 @@
-// ----- Select HTML elements -----
+// Select HTML elements 
 const output = document.getElementById("game-output");
 const input = document.getElementById("player-input");
 const btn = document.getElementById("submit-btn");
 
-// ----- Game state -----
+// Game state 
 let gameStarted = false;
 let gameOver = false;
 let hp = 10;
@@ -16,13 +16,13 @@ let items = ["stick", "potion", "magic herb"];
 const enemies = ["wolf", "spider"];
 const traps = ["pitfall", "poisonous plant"];
 
-// ----- Event listeners -----
+// Event listeners 
 btn.addEventListener("click", handleCommand);
 input.addEventListener("keypress", function(e) {
     if (e.key === "Enter") handleCommand();
 });
 
-// ----- Handle player input -----
+//  Handle player input 
 function handleCommand() {
     const command = input.value.trim().toLowerCase();
     input.value = "";
@@ -54,7 +54,7 @@ function handleCommand() {
     }
 }
 
-// ----- Append game messages -----
+// Append game messages 
 function appendGameText(text) {
     const p = document.createElement("p");
     p.textContent = text;
@@ -74,7 +74,7 @@ function scrollToBottom() {
     output.scrollTop = output.scrollHeight;
 }
 
-// ----- Move action (linear, no repeats) -----
+// Move action (linear, no repeats) 
 function moveAction() {
     if (gameOver) {
         appendGameText("The quest is over. Type 'restart' to play again.");
@@ -94,7 +94,7 @@ function moveAction() {
   }
 }
 
-// ----- Enemy encounter -----
+//  Enemy encounter 
 function enemyEncounter() {
     const enemy = enemies.shift();
     if (!enemy) {
@@ -105,7 +105,7 @@ function enemyEncounter() {
     appendGameText(`A ${enemy} appears! 🗡️ Type 'fight' or 'flee'.`);
 }
 
-// ----- Fight and flee -----
+// Fight and flee 
 function fightEnemy() {
     appendGameText(`You fight the ${currentEnemy} and win! 🎖️`);
     currentEnemy = null;
@@ -118,7 +118,7 @@ function fleeEnemy() {
     appendGameText("You continue your journey. Type 'move' to proceed.");
 }
 
-// ----- Trap encounter -----
+// Trap encounter 
 function trapEncounter() {
     const trap = traps.shift();
     if (!trap) {
@@ -131,7 +131,7 @@ function trapEncounter() {
     if (!gameOver) appendGameText("Type 'move' to continue exploring.");
 }
 
-// ----- Item encounter -----
+// Item encounter 
 function itemEncounter(specificItem = null) {
     let item = specificItem || items.shift();
     if (!item) return;
@@ -148,7 +148,7 @@ function itemEncounter(specificItem = null) {
     }
 }
 
-// ----- Check game over -----
+// Check game over 
 function checkGameOver() {
     if (hp <= 0) {
         gameOver = true;
@@ -156,7 +156,7 @@ function checkGameOver() {
     }
 }
 
-// ----- Restart game -----
+// Restart game 
 function restartGame() {
     gameStarted = false;
     gameOver = false;
