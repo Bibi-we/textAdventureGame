@@ -74,7 +74,7 @@ function scrollToBottom() {
     output.scrollTop = output.scrollHeight;
 }
 
-// Move action (linear, no repeats) 
+// Move action conditional function (linear, no repeats) 
 function moveAction() {
     if (gameOver) {
         appendGameText("The quest is over. Type 'restart' to play again.");
@@ -86,10 +86,16 @@ function moveAction() {
         enemyEncounter();
     } else if (moveCount === 2) {
         trapEncounter();
-    } else if (moveCount === 3) {
+    } 
+      else if (moveCount === 3){
+        itemEncounter();        // adds an item to the inventory 
+      }
+    else if (moveCount === 4) {
         // Always give the magic herb as final item
         itemEncounter("magic herb");
-    } else {
+    } 
+    
+    else {
         appendGameText("You've reached the end of your journey. Type 'restart' to play again.");
   }
 }
@@ -156,7 +162,7 @@ function checkGameOver() {
     }
 }
 
-// Restart game 
+// Restart game , resets all game state variables/clears output 
 function restartGame() {
     gameStarted = false;
     gameOver = false;
@@ -164,7 +170,16 @@ function restartGame() {
     inventory = [];
     currentEnemy = null;
     moveCount = 0;
-    items = ["stick", "potion", "magic herb"];
+// Shuffle arrays for variety when the game restarts
+    enemies = shuffleArray(["wolf", "Spider"]);
+    traps = shuffleArray(["pitfall", "poisonous plant"]);
+    items = shuffleArray(["stick", "potion"]);
+    items.push("magic herb"); // magic herb always the last item 
+    
     output.innerHTML = "";
     appendGameText("Game restarted! Type 'start' to begin again. 🔄");
+}
+// Helper function to shuffle arrays 
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5); // it randomly shuffles the array elements 
 }
